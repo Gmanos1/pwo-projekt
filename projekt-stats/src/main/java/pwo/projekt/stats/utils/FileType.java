@@ -5,7 +5,9 @@
 package pwo.projekt.stats.utils;
 
 /**
- *
+ * Typ wyliczeniowy odnoszacy sie do typu pliku
+ * Mozliwe typy: REGULAR, DIRECTORY, SYMLINK, OTHER
+ * 
  * @author gman
  */
 public enum FileType {
@@ -14,6 +16,10 @@ public enum FileType {
     SYMLINK,
     OTHER;
     
+    /**
+     * 
+     * @return Tekstowa reprezentacja
+     */
     @Override
     public String toString() {
         return this.toString().toLowerCase();
