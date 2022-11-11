@@ -5,6 +5,8 @@
 
 package pwo.projekt.stats;
 
+import pwo.projekt.stats.utils.FileType;
+
 /**
  *
  * @author gman
@@ -12,6 +14,13 @@ package pwo.projekt.stats;
 public class ProjektStats {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        FileType fileType = FileType.DIRECTORY;
+        System.out.println(fileType.toString());
+        try {
+            FileMetadata stats = new FileMetadata("/home/gman/waldemartosuperpies");
+            System.out.println(stats.getOwner());
+        } catch (Exception e) {
+        }
+
     }
 }
