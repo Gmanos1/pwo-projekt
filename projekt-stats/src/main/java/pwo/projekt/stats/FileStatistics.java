@@ -48,10 +48,18 @@ public class FileStatistics {
         charsStats = new HashMap<Character, Integer>();
     }
 
+    /**
+     * 
+     * @return Liczba linii w pliku
+     */
     public int getNumOfLines() {
         return fileContent.size();
     }
 
+    /**
+     * 
+     * @return Liczba slow w pliku (ciagi znakow odseparowane spacja)
+     */
     public int getNumOfWords() {
         if (words > 0) {
             return words;
@@ -62,6 +70,10 @@ public class FileStatistics {
         return words;
     }
 
+    /**
+     * 
+     * @return Liczba wszystkich znakow
+     */
     public int getNumOfChars() {
         if (chars > 0) {
             return chars;
@@ -72,6 +84,10 @@ public class FileStatistics {
         return chars;
     }
 
+    /**
+     * 
+     * @return Liczba niebialych znakow w pliku
+     */
     public int getNumOfNonWhiteChars() {
         if (nonWhiteChars > 0) {
             return nonWhiteChars;
@@ -83,6 +99,10 @@ public class FileStatistics {
         return nonWhiteChars;
     }
 
+    /**
+     * 
+     * @return Liczba znakow ASCII w pliku
+     */
     public int getNumOfAsciiChars() {
         if (asciiChars > 0) {
             return asciiChars;
@@ -93,6 +113,10 @@ public class FileStatistics {
         return asciiChars;
     }
 
+    /**
+     * 
+     * @return Liczba znakow nienalezacych do ASCII
+     */
     public int getNumOfNonAsciiChars() {
         if (nonAsciiChars > 0) {
             return nonAsciiChars;
@@ -107,6 +131,10 @@ public class FileStatistics {
         return nonAsciiChars;
     }
 
+    /**
+     * 
+     * @return Liczba polskich znakow
+     */
     public int getNumOfPolishChars() {
         if (polishChars > 0) {
             return polishChars;
@@ -117,6 +145,11 @@ public class FileStatistics {
         return polishChars;
     }
 
+    /**
+     * @see #getNumOfChars() 
+     * @see #getNumOfPolishChars() 
+     * @return Procent (w stosunku do liczby wszystkich znakow) polskich znakow w pliku 
+     */
     public double percentageOfPolishChars() {
         if (percentageOfPolishChars > 0.0) {
             return percentageOfPolishChars;
@@ -125,6 +158,10 @@ public class FileStatistics {
         return percentageOfPolishChars;
     }
 
+    /**
+     * 
+     * @return Srednia dlugosc slowa
+     */
     public double getAvgWordLength() {
         if (avgWordLength > 0.0) {
             return avgWordLength;
@@ -138,6 +175,10 @@ public class FileStatistics {
         return (double) words / nonWhiteChars;
     }
 
+    /**
+     * 
+     * @return Liczba wystapien poszczegolnych znakow w pliu
+     */
     public HashMap<Character, Integer> getCharsStats() {
         if (!charsStats.isEmpty()) {
             return charsStats;
