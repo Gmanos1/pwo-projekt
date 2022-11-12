@@ -11,8 +11,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Klasa obliczajaca statystyki dotyczace pojedynczego pliku
@@ -25,13 +28,13 @@ public class FileStatistics {
     private int chars;
     private int nonWhiteChars;
     private int words;
-    private double avgWordLength;
     private int asciiChars;
     private int nonAsciiChars;
     private int polishChars;
-    private double percentageOfPolishChars;
     private final HashMap<Character, Integer> charsStats;
+    private HashSet<Character> uniqueCharacters;
 
+    // TODO: Srednia liczba znakow w linii, srednia liczbba slow w linii, znak najczesciej wystepujacy, najrzadziej
     // TODO: Do zmiany poczatkowy warunek ustawiania na zero, bo moze byc np. 0 polskich znakow
     // TODO: Sprawdzanei rozmiaru pliku > 1GB lub 0 bajtow
     public FileStatistics(String fileName) throws IOException {
@@ -40,16 +43,15 @@ public class FileStatistics {
         words = 0;
         chars = 0;
         nonWhiteChars = 0;
-        avgWordLength = 0.0;
         asciiChars = 0;
         nonAsciiChars = 0;
         polishChars = 0;
-        percentageOfPolishChars = 0.0;
         charsStats = new HashMap<Character, Integer>();
+        uniqueCharacters = new HashSet<Character>();
     }
 
     /**
-     * 
+     *
      * @return Liczba linii w pliku
      */
     public int getNumOfLines() {
@@ -57,7 +59,7 @@ public class FileStatistics {
     }
 
     /**
-     * 
+     *
      * @return Liczba slow w pliku (ciagi znakow odseparowane spacja)
      */
     public int getNumOfWords() {
@@ -71,7 +73,7 @@ public class FileStatistics {
     }
 
     /**
-     * 
+     *
      * @return Liczba wszystkich znakow
      */
     public int getNumOfChars() {
@@ -85,7 +87,7 @@ public class FileStatistics {
     }
 
     /**
-     * 
+     *
      * @return Liczba niebialych znakow w pliku
      */
     public int getNumOfNonWhiteChars() {
@@ -100,7 +102,7 @@ public class FileStatistics {
     }
 
     /**
-     * 
+     *
      * @return Liczba znakow ASCII w pliku
      */
     public int getNumOfAsciiChars() {
@@ -114,7 +116,7 @@ public class FileStatistics {
     }
 
     /**
-     * 
+     *
      * @return Liczba znakow nienalezacych do ASCII
      */
     public int getNumOfNonAsciiChars() {
@@ -132,7 +134,7 @@ public class FileStatistics {
     }
 
     /**
-     * 
+     *
      * @return Liczba polskich znakow
      */
     public int getNumOfPolishChars() {
@@ -146,26 +148,21 @@ public class FileStatistics {
     }
 
     /**
-     * @see #getNumOfChars() 
-     * @see #getNumOfPolishChars() 
-     * @return Procent (w stosunku do liczby wszystkich znakow) polskich znakow w pliku 
+     * @see #getNumOfChars()
+     * @see #getNumOfPolishChars()
+     * @return Procent (w stosunku do liczby wszystkich znakow) polskich znakow
+     * w pliku
      */
     public double percentageOfPolishChars() {
-        if (percentageOfPolishChars > 0.0) {
-            return percentageOfPolishChars;
-        }
-        percentageOfPolishChars = (double) polishChars / chars;
-        return percentageOfPolishChars;
+        return (double) polishChars / chars * 100;
     }
 
     /**
-     * 
+     * @see #getNumOfWords()
+     * @see #getNumOfNonWhiteChars();
      * @return Srednia dlugosc slowa
      */
     public double getAvgWordLength() {
-        if (avgWordLength > 0.0) {
-            return avgWordLength;
-        }
         if (words < 1) {
             getNumOfWords();
         }
@@ -176,7 +173,31 @@ public class FileStatistics {
     }
 
     /**
-     * 
+     * @see #getNumOfWords()
+     * @see #getNumOfLines()
+     * @return Srednia liczba slow w linii
+     */
+    public double getAvgWordsInLine() {
+        if (words < 1) {
+            getNumOfWords();
+        }
+        return (double) words / getNumOfLines();
+    }
+
+    /**
+     * @see #getNumOfChars()
+     * @see #getNumOfLines()
+     * @return Srednia Liczba znakow w linii
+     */
+    public double getAvgCharsInLine() {
+        if (chars < 1) {
+            getNumOfChars();
+        }
+        return (double) chars / getNumOfLines();
+    }
+
+    /**
+     *
      * @return Liczba wystapien poszczegolnych znakow w pliu
      */
     public HashMap<Character, Integer> getCharsStats() {
@@ -191,6 +212,44 @@ public class FileStatistics {
             }
         }
         return charsStats;
+    }
+
+    /**
+     *
+     * @return Set wystepujacych znakow w pliku
+     */
+    public Set<Character> getUniqueCharacters() {
+        if (!uniqueCharacters.isEmpty()) {
+            return uniqueCharacters;
+        }
+        uniqueCharacters = (HashSet<Character>) getCharsStats().keySet();
+        return uniqueCharacters;
+    }
+
+    /**
+     *
+     * @return Znak najczesciej wystepujacy
+     */
+    public Character getMostFrequentCharacter() {
+        if (charsStats.isEmpty()) {
+            getCharsStats();
+        }
+        return Collections.max(charsStats.entrySet(),
+                (value1, value2) -> value1.getValue() - value2.getValue())
+                .getKey();
+    }
+
+    /**
+     *
+     * @return Znak najrzadziej wystepujacy
+     */
+    public Character getLeastFrequentCharacter() {
+        if (charsStats.isEmpty()) {
+            getCharsStats();
+        }
+        return Collections.min(charsStats.entrySet(),
+                (value1, value2) -> value1.getValue() - value2.getValue())
+                .getKey();
     }
 
     public void printFile() {
