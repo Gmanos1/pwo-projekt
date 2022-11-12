@@ -9,9 +9,16 @@
     <groupId>pwo.projekt.cli</groupId>
     <artifactId>projekt-cli</artifactId>
     <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>pwo.projekt.stats</groupId>
+            <artifactId>projekt-stats</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
     <properties>
-        <maven.compiler.source>19</maven.compiler.source>
-        <maven.compiler.target>19</maven.compiler.target>
+        <maven.compiler.source>18</maven.compiler.source>
+        <maven.compiler.target>18</maven.compiler.target>
         <exec.mainClass>pwo.projekt.cli.ProjektCli</exec.mainClass>
     </properties>
 </project>

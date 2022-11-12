@@ -17,10 +17,10 @@ public class ProjektStats {
         FileType fileType = FileType.DIRECTORY;
         System.out.println(fileType.toString());
         try {
-            FileMetadata stats = new FileMetadata("/home/gman/waldemartosuperpies");
+            FileMetadata stats = new FileMetadata("/home/opensuse/eliza/abc");
             System.out.println(stats.getOwner());
         } catch (Exception e) {
+            System.out.println("Nie mozna odczytac pliku");
         }
-
     }
 }
