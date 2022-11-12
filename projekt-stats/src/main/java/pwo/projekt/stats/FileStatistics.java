@@ -95,8 +95,7 @@ public class FileStatistics {
             return nonWhiteChars;
         }
         for (String line : fileContent) {
-            line = line.replaceAll("\\s+", "");
-            nonWhiteChars += line.length();
+            nonWhiteChars = line.replaceAll("\\s+", "").length();
         }
         return nonWhiteChars;
     }
@@ -110,7 +109,7 @@ public class FileStatistics {
             return asciiChars;
         }
         for (String line : fileContent) {
-            asciiChars += line.replaceAll("^\\p{ASCII}*$", "").length();
+            asciiChars += line.length() - line.replaceAll("^\\p{ASCII}*$", "").length();
         }
         return asciiChars;
     }
@@ -142,7 +141,7 @@ public class FileStatistics {
             return polishChars;
         }
         for (String line : fileContent) {
-            polishChars += line.replaceAll("[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]", "").length();
+            polishChars += line.length() - line.replaceAll("[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]", "").length();
         }
         return polishChars;
     }
