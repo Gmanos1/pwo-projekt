@@ -34,21 +34,23 @@ public class FileMetadataTest {
 
     @Test
     public void testGetCreationTime() {
-        assertEquals(metadata.getCreationTime()
+        String date = metadata.getCreationTime()
                 .toInstant().atZone(ZoneId.of("Europe/Warsaw"))
                 .toLocalDateTime()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), 
-                "2022-11-12 12:33:23");
-        System.out.println("Data utworzenia pliku");
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        System.out.println("Data utworzenia pliku: " + date);
+        assertEquals(date, "2022-11-12 12:33:23");
     }
     
     @Test
     public void testGetFileType() {
+        System.out.println("Typ pliku: " + metadata.getFileType());
         assertEquals(metadata.getFileType(), FileType.REGULAR);
     }
     
     @Test
     public void testGetFileSize(){
+        System.out.println("Rozmiar pliku: " + metadata.getFileSize());
         assertEquals(metadata.getFileSize(), 133);
     }
 }
