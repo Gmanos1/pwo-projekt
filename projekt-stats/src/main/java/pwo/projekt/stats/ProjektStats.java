@@ -13,12 +13,19 @@ import pwo.projekt.stats.utils.FileType;
  */
 public class ProjektStats {
 
+    private static String testFile = "/home/gman/testFile";
     public static void main(String[] args) {
         FileType fileType = FileType.DIRECTORY;
         System.out.println(fileType.toString());
         try {
-            FileMetadata stats = new FileMetadata("/home/gman/waldemartosuperpies");
-            System.out.println(stats.getOwner());
+            FileMetadata meta = new FileMetadata(testFile);
+            System.out.println(meta.getOwner());
+            FileStatistics stats = new FileStatistics(testFile);
+            //stats.printFile();
+            System.out.println(stats.getNumOfLines());
+             System.out.println(stats.getNumOfWords());
+             System.out.println(stats.getNumOfChars());
+             System.out.println(stats.getCharsStats());
         } catch (Exception e) {
         }
 
