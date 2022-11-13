@@ -9,6 +9,13 @@
     <groupId>pwo.projekt.gui</groupId>
     <artifactId>projekt-gui</artifactId>
     <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>pwo.projekt.stats</groupId>
+            <artifactId>projekt-stats</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
         <maven.compiler.target>19</maven.compiler.target>

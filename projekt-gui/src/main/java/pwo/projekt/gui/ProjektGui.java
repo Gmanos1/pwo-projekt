@@ -4,23 +4,40 @@
  */
 package pwo.projekt.gui;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import pwo.projekt.stats.FileMetadata;
+import pwo.projekt.stats.FileStatistics;
+import pwo.projekt.stats.utils.FileType;
+
 /**
  *
- * @author student
+ * @author Michał Moń
  */
 public class ProjektGui extends javax.swing.JFrame {
 
     private static final String APP_NAME = "Praktyka wytwarzania oprogramowania - projekt";
     private static int DEFAULT_WIDTH = 800, DEFAULT_HEIGHT = 600;
+    private final JFileChooser openFileChooser;
+    private String filename1 = "";
+    private String filename2 = "";
+    private String path1 = "";
+    private String path2 = "";
     /**
      * Creates new form ProjektGui
      */
     public ProjektGui() {
         initComponents();
+        openFileChooser = new JFileChooser();
+        openFileChooser.setCurrentDirectory(new File("C:\\"));
+        openFileChooser.setFileFilter(new FileNameExtensionFilter("Plik tekstowy .txt", "txt"));
     }
     
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,16 +52,18 @@ public class ProjektGui extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        OpenSecondFile = new javax.swing.JButton();
+        OpenFirstFile = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        FirstFileStatsButton = new javax.swing.JButton();
+        SecondFileStatsButton = new javax.swing.JButton();
+        messageLabel1 = new javax.swing.JLabel();
+        messageLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,17 +78,17 @@ public class ProjektGui extends javax.swing.JFrame {
 
         jLabel5.setText("Michał Moń");
 
-        jButton1.setText("Wybierz plik...");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        OpenSecondFile.setText("Wybierz plik...");
+        OpenSecondFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                OpenSecondFileActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Wybierz plik...");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        OpenFirstFile.setText("Wybierz plik...");
+        OpenFirstFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                OpenFirstFileActionPerformed(evt);
             }
         });
 
@@ -85,9 +104,19 @@ public class ProjektGui extends javax.swing.JFrame {
         jTextArea2.setRows(5);
         jScrollPane2.setViewportView(jTextArea2);
 
-        jButton3.setText("Oblicz statystyki");
+        FirstFileStatsButton.setText("Oblicz statystyki");
+        FirstFileStatsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FirstFileStatsButtonActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Oblicz statystyki");
+        SecondFileStatsButton.setText("Oblicz statystyki");
+        SecondFileStatsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SecondFileStatsButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -98,37 +127,36 @@ public class ProjektGui extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(259, 259, 259))
             .addGroup(layout.createSequentialGroup()
+                .addGap(55, 55, 55)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton3)))
+                        .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton4))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(OpenFirstFile)
+                        .addGap(18, 18, 18)
+                        .addComponent(FirstFileStatsButton))
+                    .addComponent(messageLabel1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(277, 277, 277)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(56, 56, 56)))))
-                .addGap(0, 66, Short.MAX_VALUE))
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(OpenSecondFile)
+                        .addGap(18, 18, 18)
+                        .addComponent(SecondFileStatsButton))
+                    .addComponent(messageLabel2)
+                    .addComponent(jScrollPane2))
+                .addGap(0, 99, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3))
+                .addGap(370, 370, 370))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,37 +165,95 @@ public class ProjektGui extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
+                    .addComponent(OpenFirstFile)
                     .addComponent(jLabel6)
-                    .addComponent(jButton1)
+                    .addComponent(OpenSecondFile)
                     .addComponent(jLabel7)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                    .addComponent(FirstFileStatsButton)
+                    .addComponent(SecondFileStatsButton))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(messageLabel2)
+                    .addComponent(messageLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(90, 90, 90)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addGap(35, 35, 35))
+                .addGap(57, 57, 57))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void OpenSecondFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenSecondFileActionPerformed
+        int returnValue = openFileChooser.showOpenDialog(this);
+        if (returnValue == JFileChooser.APPROVE_OPTION){
+                filename2 = openFileChooser.getSelectedFile().getName();
+                path2 = openFileChooser.getSelectedFile().getAbsolutePath();
+                messageLabel2.setText("Wczytano plik: " + filename2 + " Ścieżka: " + path2);
+        }
+        else{
+            messageLabel2.setText("Nie wybrano pliku!");
+        }
+    }//GEN-LAST:event_OpenSecondFileActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void OpenFirstFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenFirstFileActionPerformed
+        int returnValue = openFileChooser.showOpenDialog(this);
+        if (returnValue == JFileChooser.APPROVE_OPTION){
+                filename1 = openFileChooser.getSelectedFile().getName();
+                path1 = openFileChooser.getSelectedFile().getAbsolutePath();
+                messageLabel1.setText("Wczytano plik: " + filename1 + " Ścieżka: " + path1);
+        }
+        else{
+            messageLabel1.setText("Nie wybrano pliku!");
+        }
+    }//GEN-LAST:event_OpenFirstFileActionPerformed
+
+    private void FirstFileStatsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FirstFileStatsButtonActionPerformed
+        Object[] filesData = new Object[21];
+        FileMetadata metadata;
+        try {
+            metadata = new FileMetadata(path1);
+            filesData[0] = metadata.getCreationTime();
+            filesData[1] = metadata.getLastAccessTime();
+            messageLabel1.setText(filesData[0].toString());
+        } catch (IOException ex) {
+            Logger.getLogger(ProjektGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+            /*filesData[i][3] = metadata.getLastModificationTime();
+            filesData[i][4] = metadata.getFileType();
+            filesData[i][5] = metadata.getFileSize();
+            filesData[i][6] = metadata.getOwner();
+            FileStatistics stats = new FileStatistics(path);
+            filesData[i][7] = stats.getNumOfLines();
+            filesData[i][8] = stats.getNumOfWords();
+            filesData[i][9] = stats.getNumOfChars();
+            filesData[i][9] = stats.getNumOfNonWhiteChars();
+            filesData[i][10] = stats.getNumOfAsciiChars();
+            filesData[i][11] = stats.getNumOfNonAsciiChars();
+            filesData[i][12] = stats.getNumOfPolishChars();
+            filesData[i][13] = stats.percentageOfPolishChars();
+            filesData[i][14] = stats.getAvgWordLength();
+            filesData[i][15] = stats.getAvgWordsInLine();
+            filesData[i][16] = stats.getAvgCharsInLine();
+            filesData[i][17] = stats.getMostFrequentCharacter();
+            filesData[i][18] = stats.getLeastFrequentCharacter();
+            filesData[i][19] = stats.getCharsStats();*/
+    }//GEN-LAST:event_FirstFileStatsButtonActionPerformed
+
+    private void SecondFileStatsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SecondFileStatsButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_SecondFileStatsButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,10 +294,10 @@ public class ProjektGui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton FirstFileStatsButton;
+    private javax.swing.JButton OpenFirstFile;
+    private javax.swing.JButton OpenSecondFile;
+    private javax.swing.JButton SecondFileStatsButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -223,5 +309,7 @@ public class ProjektGui extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JLabel messageLabel1;
+    private javax.swing.JLabel messageLabel2;
     // End of variables declaration//GEN-END:variables
 }
