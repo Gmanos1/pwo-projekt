@@ -13,7 +13,6 @@ import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +31,6 @@ public class FileStatistics {
     private int nonAsciiChars;
     private int polishChars;
     private final HashMap<Character, Integer> charsStats;
-    private HashSet<Character> uniqueCharacters;
 
     // TODO: Srednia liczba znakow w linii, srednia liczbba slow w linii, znak najczesciej wystepujacy, najrzadziej
     // TODO: Do zmiany poczatkowy warunek ustawiania na zero, bo moze byc np. 0 polskich znakow
@@ -47,7 +45,6 @@ public class FileStatistics {
         nonAsciiChars = 0;
         polishChars = 0;
         charsStats = new HashMap<Character, Integer>();
-        uniqueCharacters = new HashSet<Character>();
     }
 
     /**
@@ -95,8 +92,7 @@ public class FileStatistics {
             return nonWhiteChars;
         }
         for (String line : fileContent) {
-            line = line.replaceAll("\\s+", "");
-            nonWhiteChars += line.length();
+            nonWhiteChars += line.replaceAll("\\s+", "").length();
         }
         return nonWhiteChars;
     }
@@ -110,7 +106,7 @@ public class FileStatistics {
             return asciiChars;
         }
         for (String line : fileContent) {
-            asciiChars += line.replaceAll("^\\p{ASCII}*$", "").length();
+            asciiChars += line.length() - line.replaceAll("^\\p{ASCII}*$", "").length();
         }
         return asciiChars;
     }
@@ -142,7 +138,7 @@ public class FileStatistics {
             return polishChars;
         }
         for (String line : fileContent) {
-            polishChars += line.replaceAll("[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]", "").length();
+            polishChars += line.length() - line.replaceAll("[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]", "").length();
         }
         return polishChars;
     }
@@ -219,11 +215,10 @@ public class FileStatistics {
      * @return Set wystepujacych znakow w pliku
      */
     public Set<Character> getUniqueCharacters() {
-        if (!uniqueCharacters.isEmpty()) {
-            return uniqueCharacters;
+        if(charsStats.isEmpty()) {
+            getCharsStats();
         }
-        uniqueCharacters = (HashSet<Character>) getCharsStats().keySet();
-        return uniqueCharacters;
+        return getCharsStats().keySet();
     }
 
     /**
