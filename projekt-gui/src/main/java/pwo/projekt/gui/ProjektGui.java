@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package pwo.projekt.gui;
 
 import java.io.File;
@@ -22,12 +18,15 @@ import pwo.projekt.stats.utils.FileType;
 public class ProjektGui extends javax.swing.JFrame {
 
     private static final String APP_NAME = "Praktyka wytwarzania oprogramowania - projekt";
-    private static int DEFAULT_WIDTH = 800, DEFAULT_HEIGHT = 600;
+    private static int DEFAULT_WIDTH = 850, DEFAULT_HEIGHT = 600;
     private final JFileChooser openFileChooser;
     private String filename1 = "";
     private String filename2 = "";
     private String path1 = "";
     private String path2 = "";
+    private Object[] filesData = new Object[20];
+    private Object[] filesDataSecond = new Object[20];
+    
     /**
      * Creates new form ProjektGui
      */
@@ -61,15 +60,15 @@ public class ProjektGui extends javax.swing.JFrame {
         messageLabel1 = new javax.swing.JLabel();
         messageLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        firstFileStatsList = new javax.swing.JList<>();
+        FirstFileResultLabel = new javax.swing.JLabel();
+        SecondFileResultLabel = new javax.swing.JLabel();
+        SecondFileResult = new javax.swing.JTextField();
+        FirstFileResult = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
+        secondFileStatsList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -116,155 +115,156 @@ public class ProjektGui extends javax.swing.JFrame {
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Creation Time", "Last Access Time",
-                "Last Modification Time", "File Type", "File Size",
-                "Owner", "Number of lines", "Number of words",
-                "Number of characters", "Number of non-white chars",
-                "Number of ASCII chars", "Number of non-ASCII chars",
-                "Number of polish chars", "percentage of polish chars",
-                "Average word length", "Average words in line",
-                "Average chars in line", "Most frequent character",
-                "Least frequent character"};
+        firstFileStatsList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Data utworzenia", "Czas ostatniego dostępu",
+                "Czas ostatniej modyfikacji", "Rodzaj pliku", "Rozmiar pliku",
+                "Autor", "Liczba wierszy", "Liczba wyrazów",
+                "Liczba znaków", "Liczba znaków (bez białych)",
+                "Liczba znaków ASCII", "Liczba znaków nie-ASCII",
+                "Liczba polskich znaków", "Procent polskich znaków",
+                "Średnia długość wyrazu", "Średnia ilość wyrazów w wierszu",
+                "Średnia ilość znaków w wierszu", "Najczęstszy znak",
+                "Najrzadszy znak"};
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jList1.addMouseListener(new java.awt.event.MouseAdapter() {
+        firstFileStatsList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jList1MouseClicked(evt);
+                firstFileStatsListMouseClicked(evt);
             }
         });
-        jScrollPane3.setViewportView(jList1);
+        jScrollPane3.setViewportView(firstFileStatsList);
 
-        jLabel8.setText("Dane:");
+        FirstFileResultLabel.setText("Dane:");
 
-        jLabel10.setText("Dane:");
+        SecondFileResultLabel.setText("Dane:");
+
+        SecondFileResult.setEditable(false);
+
+        FirstFileResult.setEditable(false);
 
         jLabel9.setText("Wybierz statystykę, żeby ją wyświetlić");
 
         jLabel11.setText("Wybierz statystykę, żeby ją wyświetlić");
 
-        jList3.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Creation Time", "Last Access Time",
-                "Last Modification Time", "File Type", "File Size",
-                "Owner", "Number of lines", "Number of words",
-                "Number of characters", "Number of non-white chars",
-                "Number of ASCII chars", "Number of non-ASCII chars",
-                "Number of polish chars", "percentage of polish chars",
-                "Average word length", "Average words in line",
-                "Average chars in line", "Most frequent character",
-                "Least frequent character"};
+        secondFileStatsList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Data utworzenia", "Czas ostatniego dostępu",
+                "Czas ostatniej modyfikacji", "Rodzaj pliku", "Rozmiar pliku",
+                "Autor", "Liczba wierszy", "Liczba wyrazów",
+                "Liczba znaków", "Liczba znaków (bez białych)",
+                "Liczba znaków ASCII", "Liczba znaków nie-ASCII",
+                "Liczba polskich znaków", "Procent polskich znaków",
+                "Średnia długość wyrazu", "Średnia ilość wyrazów w wierszu",
+                "Średnia ilość znaków w wierszu", "Najczęstszy znak",
+                "Najrzadszy znak"};
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jList3.addMouseListener(new java.awt.event.MouseAdapter() {
+        secondFileStatsList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jList3MouseClicked(evt);
+                secondFileStatsListMouseClicked(evt);
             }
         });
-        jScrollPane5.setViewportView(jList3);
+        jScrollPane5.setViewportView(secondFileStatsList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(108, 108, 108)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(FirstFileStatsButton))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(FirstFileResult, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(FirstFileResultLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(messageLabel1)
-                                    .addComponent(OpenFirstFile, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
+                                    .addComponent(FirstFileStatsButton)
+                                    .addComponent(OpenFirstFile, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(messageLabel1))))
+                        .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel9))))
-                .addGap(193, 193, 193)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                            .addComponent(jTextField1))
-                        .addGap(25, 25, 25))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(SecondFileStatsButton)
-                            .addComponent(OpenSecondFile, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(messageLabel2))
-                        .addGap(119, 119, 119))
+                                    .addComponent(messageLabel2)
+                                    .addComponent(OpenSecondFile, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(SecondFileStatsButton)))
+                            .addComponent(jLabel11)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(SecondFileResult, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(SecondFileResultLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addContainerGap())))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(324, 324, 324)
-                    .addComponent(jLabel1))
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(331, 331, 331)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel5)
-                        .addComponent(jLabel4)
-                        .addComponent(jLabel3))))
+                        .addGap(270, 270, 270)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(304, 304, 304)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel1)
-                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(OpenSecondFile)
-                        .addComponent(jLabel7))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(messageLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SecondFileStatsButton))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(158, 158, 158)
+                                .addComponent(SecondFileResultLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(SecondFileResult, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(226, 226, 226))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(OpenSecondFile)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(SecondFileStatsButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(messageLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)))
+                        .addComponent(jLabel11))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(OpenFirstFile)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(FirstFileStatsButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(messageLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(FirstFileStatsButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel11))
-                .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(FirstFileResultLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(FirstFileResult, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
@@ -272,7 +272,7 @@ public class ProjektGui extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5)
-                .addGap(17, 17, 17))
+                .addGap(15, 15, 15))
         );
 
         pack();
@@ -283,7 +283,7 @@ public class ProjektGui extends javax.swing.JFrame {
         if (returnValue == JFileChooser.APPROVE_OPTION){
                 filename2 = openFileChooser.getSelectedFile().getName();
                 path2 = openFileChooser.getSelectedFile().getAbsolutePath();
-                messageLabel2.setText("Wczytano plik: " + filename2 + " Ścieżka: " + path2);
+                messageLabel2.setText("Wczytano plik: " + filename2);
         }
         else{
             messageLabel2.setText("Nie wybrano pliku!");
@@ -295,7 +295,7 @@ public class ProjektGui extends javax.swing.JFrame {
         if (returnValue == JFileChooser.APPROVE_OPTION){
                 filename1 = openFileChooser.getSelectedFile().getName();
                 path1 = openFileChooser.getSelectedFile().getAbsolutePath();
-                messageLabel1.setText("Wczytano plik: " + filename1 + " Ścieżka: " + path1);
+                messageLabel1.setText("Wczytano plik: " + filename1);
         }
         else{
             messageLabel1.setText("Nie wybrano pliku!");
@@ -303,7 +303,7 @@ public class ProjektGui extends javax.swing.JFrame {
     }//GEN-LAST:event_OpenFirstFileActionPerformed
 
     private void FirstFileStatsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FirstFileStatsButtonActionPerformed
-        Object[] filesData = new Object[20];
+
         FileMetadata metadata;
         try {
             metadata = new FileMetadata(path1);
@@ -328,7 +328,7 @@ public class ProjektGui extends javax.swing.JFrame {
             filesData[17] = stats.getMostFrequentCharacter();
             filesData[18] = stats.getLeastFrequentCharacter();
             filesData[19] = stats.getCharsStats();
-            messageLabel1.setText(filesData[7].toString());
+            messageLabel1.setText("Udało się obliczyć statystyki pliku!");
         } catch (IOException ex) {
             Logger.getLogger(ProjektGui.class.getName()).log(Level.SEVERE, null, ex);
             messageLabel1.setText("Nie udało się obliczyć statystyk!");
@@ -336,55 +336,54 @@ public class ProjektGui extends javax.swing.JFrame {
     }//GEN-LAST:event_FirstFileStatsButtonActionPerformed
 
     private void SecondFileStatsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SecondFileStatsButtonActionPerformed
-        Object[] filesData = new Object[20];
+        
         FileMetadata metadata;
         try {
             metadata = new FileMetadata(path2);
-            filesData[0] = metadata.getCreationTime();
-            filesData[1] = metadata.getLastAccessTime();
-            filesData[2] = metadata.getLastModificationTime();
-            filesData[3] = metadata.getFileType();
-            filesData[4] = metadata.getFileSize();
-            filesData[5] = metadata.getOwner();
+            filesDataSecond[0] = metadata.getCreationTime();
+            filesDataSecond[1] = metadata.getLastAccessTime();
+            filesDataSecond[2] = metadata.getLastModificationTime();
+            filesDataSecond[3] = metadata.getFileType();
+            filesDataSecond[4] = metadata.getFileSize();
+            filesDataSecond[5] = metadata.getOwner();
             FileStatistics stats = new FileStatistics(path2);
-            filesData[6] = stats.getNumOfLines();
-            filesData[7] = stats.getNumOfWords();
-            filesData[8] = stats.getNumOfChars();
-            filesData[9] = stats.getNumOfNonWhiteChars();
-            filesData[10] = stats.getNumOfAsciiChars();
-            filesData[11] = stats.getNumOfNonAsciiChars();
-            filesData[12] = stats.getNumOfPolishChars();
-            filesData[13] = stats.percentageOfPolishChars();
-            filesData[14] = stats.getAvgWordLength();
-            filesData[15] = stats.getAvgWordsInLine();
-            filesData[16] = stats.getAvgCharsInLine();
-            filesData[17] = stats.getMostFrequentCharacter();
-            filesData[18] = stats.getLeastFrequentCharacter();
-            filesData[19] = stats.getCharsStats();
-            messageLabel2.setText(filesData[7].toString());
+            filesDataSecond[6] = stats.getNumOfLines();
+            filesDataSecond[7] = stats.getNumOfWords();
+            filesDataSecond[8] = stats.getNumOfChars();
+            filesDataSecond[9] = stats.getNumOfNonWhiteChars();
+            filesDataSecond[10] = stats.getNumOfAsciiChars();
+            filesDataSecond[11] = stats.getNumOfNonAsciiChars();
+            filesDataSecond[12] = stats.getNumOfPolishChars();
+            filesDataSecond[13] = stats.percentageOfPolishChars();
+            filesDataSecond[14] = stats.getAvgWordLength();
+            filesDataSecond[15] = stats.getAvgWordsInLine();
+            filesDataSecond[16] = stats.getAvgCharsInLine();
+            filesDataSecond[17] = stats.getMostFrequentCharacter();
+            filesDataSecond[18] = stats.getLeastFrequentCharacter();
+            filesDataSecond[19] = stats.getCharsStats();
+            messageLabel2.setText("Udało się obliczyć statystyki pliku!");
         } catch (IOException ex) {
             Logger.getLogger(ProjektGui.class.getName()).log(Level.SEVERE, null, ex);
             messageLabel2.setText("Nie udało się obliczyć statystyk!");
         }
     }//GEN-LAST:event_SecondFileStatsButtonActionPerformed
 
-    private void jList1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1MouseClicked
+    private void firstFileStatsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_firstFileStatsListMouseClicked
 
-    //indeks = tablica? TAK ZROBIC
-    Object sel =null;
+        String sel = "";
+        int selectedIx = this.firstFileStatsList.getSelectedIndex();      
+        sel = filesData[selectedIx].toString();
+        //System.out.println(sel);
+        FirstFileResult.setText(sel);
+    }//GEN-LAST:event_firstFileStatsListMouseClicked
 
-    int[] selectedIx = this.jList1.getSelectedIndices();      
-
-    for (int i = 0; i < selectedIx.length; i++) {
-        sel = jList1.getModel().getElementAt(selectedIx[i]);
-    }
-
-    System.out.println(sel);
-    }//GEN-LAST:event_jList1MouseClicked
-
-    private void jList3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jList3MouseClicked
+    private void secondFileStatsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_secondFileStatsListMouseClicked
+        String sel = "";
+        int selectedIx = this.secondFileStatsList.getSelectedIndex();      
+        sel = filesDataSecond[selectedIx].toString();
+        //System.out.println(sel);
+        SecondFileResult.setText(sel);
+    }//GEN-LAST:event_secondFileStatsListMouseClicked
 
     /**
      * @param args the command line arguments
@@ -425,12 +424,16 @@ public class ProjektGui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField FirstFileResult;
+    private javax.swing.JLabel FirstFileResultLabel;
     private javax.swing.JButton FirstFileStatsButton;
     private javax.swing.JButton OpenFirstFile;
     private javax.swing.JButton OpenSecondFile;
+    private javax.swing.JTextField SecondFileResult;
+    private javax.swing.JLabel SecondFileResultLabel;
     private javax.swing.JButton SecondFileStatsButton;
+    private javax.swing.JList<String> firstFileStatsList;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -438,15 +441,11 @@ public class ProjektGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList3;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel messageLabel1;
     private javax.swing.JLabel messageLabel2;
+    private javax.swing.JList<String> secondFileStatsList;
     // End of variables declaration//GEN-END:variables
 }
