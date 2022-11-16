@@ -23,9 +23,9 @@ public class ProjektStats {
             FileStatistics stats = new FileStatistics(testFile);
             //stats.printFile();
             System.out.println(stats.getNumOfLines());
-             System.out.println(stats.getNumOfWords());
-             System.out.println(stats.getNumOfChars());
-             System.out.println(stats.getCharsStats());
+            System.out.println(stats.getNumOfWords());
+            System.out.println(stats.getNumOfChars());
+            System.out.println(stats.getCharsStats());
         } catch (Exception e) {
         }
 
