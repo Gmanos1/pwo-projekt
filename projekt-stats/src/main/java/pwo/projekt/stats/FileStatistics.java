@@ -155,7 +155,7 @@ public class FileStatistics {
 
     /**
      * @see #getNumOfWords()
-     * @see #getNumOfNonWhiteChars();
+     * @see #getNumOfNonWhiteChars()
      * @return Srednia dlugosc slowa
      */
     public double getAvgWordLength() {

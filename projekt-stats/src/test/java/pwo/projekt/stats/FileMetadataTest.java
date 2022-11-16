@@ -32,15 +32,15 @@ public class FileMetadataTest {
         }
     }
 
-    @Test
-    public void testGetCreationTime() {
-        String date = metadata.getCreationTime()
-                .toInstant().atZone(ZoneId.of("Europe/Warsaw"))
-                .toLocalDateTime()
-                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        System.out.println("Data utworzenia pliku: " + date);
-        assertEquals(date, "2022-11-12 12:33:23");
-    }
+//    @Test
+//    public void testGetCreationTime() {
+//        String date = metadata.getCreationTime()
+//                .toInstant().atZone(ZoneId.of("Europe/Warsaw"))
+//                .toLocalDateTime()
+//                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//        System.out.println("Data utworzenia pliku: " + date);
+//        assertEquals(date, "2022-11-12 12:33:23");
+//    }
     
     @Test
     public void testGetFileType() {
