@@ -7,7 +7,7 @@ package pwo.projekt.cli;
 /**
  *
  * @author elizakoziol8
- * KLasa wyswietlajaca w konsoli dane statystyczne wszystkich plikow
+ * Klasa wyswietlajaca w konsoli dane statystyczne wszystkich plikow
  */
 
 public class DataDisplay {
