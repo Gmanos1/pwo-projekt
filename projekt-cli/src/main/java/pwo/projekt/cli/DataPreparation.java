@@ -13,10 +13,16 @@ import pwo.projekt.stats.FileStatistics;
 /**
  *
  * @author elizakoziol8
+ * Klasa przygotowujaca dane do wyswietlania statystyk
  */
+
 public class DataPreparation {
     
-    
+    /**
+     * 
+     * @return filesAMount (liczba plikow)
+     * @throws IOException 
+     */
     public static int getAmountOfFiles() throws IOException {
         int filesAmount = 0;
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));          
@@ -29,6 +35,10 @@ public class DataPreparation {
         return filesAmount;
     }
     
+    /**
+     * 
+     * @return headlineData - naglowki do zwracanych danych
+     */
     public static String[] createHeadline() {
         String[] headlineData = new String[21];
         
@@ -57,6 +67,12 @@ public class DataPreparation {
         return headlineData;
     }
     
+    /**
+     * 
+     * @param filesAmount - liczba plikow
+     * @return filesData - zwraca dane statystyczne do porownania plikow
+     * @throws IOException 
+     */
     public static Object[][] createDataTable(int filesAmount) throws IOException {
         Object[][] filesData = new Object[filesAmount][21]; 
         String path;
@@ -91,6 +107,13 @@ public class DataPreparation {
         return filesData;         
     }
     
+    /**
+     * 
+     * @param fileNumber
+     * @param filesAmount
+     * @return pathOfFile - sciezka do pliku
+     * @throws IOException 
+     */
     public static String getPathOfFile(int fileNumber, int filesAmount) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));          
         System.out.println(String.format("(%d/%d) Podaj sciezke pliku:", fileNumber, filesAmount));

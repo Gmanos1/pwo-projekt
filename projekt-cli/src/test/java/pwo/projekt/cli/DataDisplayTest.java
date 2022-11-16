@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  *
- * @author opensuse
+ * @author elizakoziol8
  */
 public class DataDisplayTest {
     
@@ -69,8 +69,6 @@ public class DataDisplayTest {
         int filesAmount = 0;
         Object[][] filesData = null;
         DataDisplay.printFilesData(filesAmount, filesData);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
     
 }
