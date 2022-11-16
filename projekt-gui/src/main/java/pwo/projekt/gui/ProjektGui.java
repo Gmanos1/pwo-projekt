@@ -14,6 +14,7 @@ import pwo.projekt.stats.utils.FileType;
 /**
  *
  * @author Michał Moń
+ * Klasa sluzaca do wyswietlania aplikacji w trybie interfejsu graficznego
  */
 public class ProjektGui extends javax.swing.JFrame {
 
@@ -28,7 +29,8 @@ public class ProjektGui extends javax.swing.JFrame {
     private Object[] filesDataSecond = new Object[20];
     
     /**
-     * Creates new form ProjektGui
+     * Tworzy nowy formularz klasy 
+     * @see #ProjektGui
      */
     public ProjektGui() {
         initComponents();
